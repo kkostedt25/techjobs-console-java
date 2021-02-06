@@ -2,7 +2,9 @@ package org.launchcode.techjobs.console;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Scanner;
+
 
 /**
  * Created by LaunchCode
@@ -25,6 +27,8 @@ public class TechJobs {
         HashMap<String, String> actionChoices = new HashMap<>();
         actionChoices.put("search", "Search");
         actionChoices.put("list", "List");
+
+
 
         System.out.println("Welcome to LaunchCode's TechJobs App!");
 
@@ -55,19 +59,21 @@ public class TechJobs {
 
                 // How does the user want to search (e.g. by skill or employer)
                 String searchField = getUserSelection("Search by:", columnChoices);
-
                 // What is their search term?
                 System.out.println("\nSearch term: ");
                 String searchTerm = in.nextLine();
 
+
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchTerm));
+
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
             }
         }
     }
+
 
     // ﻿Returns the key of the selected item from the choices Dictionary
     private static String getUserSelection(String menuHeader, HashMap<String, String> choices) {
@@ -110,7 +116,23 @@ public class TechJobs {
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+            if (someJobs.isEmpty()){
+                System.out.println("No results.");
+            } else {
+                for (HashMap <String, String> job : someJobs){
+                    System.out.println("\n*****");
+                    for (String key : job.keySet()){
+                        //   System.out.println(key);
+                        //job.get(key);
+                        System.out.println(key + ":" + job.get(key));
 
-        System.out.println("printJobs is not implemented yet");
+
+                    }
+                    System.out.println("*****");
+                }
+            }
+
+
+
     }
-}
+    }
